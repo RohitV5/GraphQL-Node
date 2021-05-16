@@ -15,3 +15,5 @@ const location = "Baroda";
 
 
 export {message, location as default};
+
+GraphQl 
