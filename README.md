@@ -30,3 +30,6 @@ parent - hot to get users post.
 args - contains arguments supplied.
 ctx - context like token, authorization detail, ID.
 info - info about actual operation sent along to the server.
+
+
+Next up: 15. Relational Data Arrays.mp4
