@@ -6,8 +6,10 @@ const typeDefs = `
     type Query {
         greeting(name: String, position: String): String!
         hello: String!
+        grades: [Int!]!
         name: String!
         me: User! 
+        add(numbers: [Float!]): Float!
     }
     
 
@@ -46,6 +48,17 @@ const resolvers = {
                 return 'Hello!'
             }
          
+        },
+        grades(parent, args, ctx, info){
+            return [99,89,93]
+        },
+        add(parent,args, ctx, info){
+            if(args.numbers.length == 0){
+               return 0 
+            }
+
+            // [1, 5, 2]
+            return args.numbers.reduce((accumulator,currentValue)=> accumulator + currentValue)
         }
     }
 
