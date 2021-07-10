@@ -22,3 +22,11 @@ GraphQL Scalar Types
 
 GraphQL Non Scalar Type
 Object {}
+
+Note: In pramater ! means compulsory. But in query ! means optional.
+
+parameters meanings
+parent - hot to get users post.
+args - contains arguments supplied.
+ctx - context like token, authorization detail, ID.
+info - info about actual operation sent along to the server.

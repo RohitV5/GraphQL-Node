@@ -4,9 +4,10 @@ import {GraphQLServer} from 'graphql-yoga';
 // you cant add comments in there
 const typeDefs = `
     type Query {
+        greeting(name: String, position: String): String!
         hello: String!
         name: String!
-        me: User!
+        me: User! 
     }
     
 
@@ -16,6 +17,7 @@ const typeDefs = `
         email: String!
         age:Int
     }
+
 `
 
 
@@ -27,7 +29,7 @@ const resolvers = {
             return 'This is my first query!'
         },
         name(){
-            return 'Andrew Mead'
+            return 'Ram Prasad'
         },
         me(){
             return {
@@ -36,6 +38,14 @@ const resolvers = {
                 email: 'verma.rohit.in@gmail.com',
                 age:24 
             }
+        },
+        greeting(parent, args, ctx, info){
+            if(args.name && args.position){
+                return `Hello, ${args.name}! you are my favorite ${args.position}`
+            }else{
+                return 'Hello!'
+            }
+         
         }
     }
 
