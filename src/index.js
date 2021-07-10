@@ -18,12 +18,14 @@ const posts = [{
     id:'092',
     title:'My Biography',
     body:'Type Dolor Emet',
-    published:true
+    published:true,
+    author:'2'
 },{
     id:'092',
     title:'My Biography Vol 2',
     body:'Type Dolor Emet Wonka',
-    published:false
+    published:false,
+    author:'2'
 
 }]
 
@@ -34,6 +36,7 @@ const typeDefs = `
         users(query: String): [User!]!
         me: User! 
         posts(query: String): [Post!]!
+        post:Post!
 
     }
     
@@ -51,6 +54,7 @@ const typeDefs = `
         title: String!
         body: String!
         published:Boolean!
+        author:User!
     }
 
 `
@@ -89,6 +93,14 @@ const resolvers = {
                 })
             }
             
+        }
+    },
+    Post:{
+        author(parent, args, ctx, info){
+            // parent has all the info to find relationship
+            return users.find((user)=>{
+                return user.id == parent.author
+            }) 
         }
     }    
 }
