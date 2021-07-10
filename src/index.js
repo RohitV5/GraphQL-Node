@@ -1,15 +1,40 @@
 import {GraphQLServer} from 'graphql-yoga';
 
+// Demo User Data
+const users = [{
+    id: '1',
+    name: ' Andrew',
+    email: 'andrew@example.com',
+    age:27
+},{
+    id: '2',
+    name: 'Rohit',
+    email: 'rohit@example.com',
+
+}]
+
+
+const posts = [{
+    id:'092',
+    title:'My Biography',
+    body:'Type Dolor Emet',
+    published:true
+},{
+    id:'092',
+    title:'My Biography Vol 2',
+    body:'Type Dolor Emet Wonka',
+    published:false
+
+}]
+
 // Type definitions a.k.a Application Schema.
 // you cant add comments in there
 const typeDefs = `
     type Query {
-        greeting(name: String, position: String): String!
-        hello: String!
-        grades: [Int!]!
-        name: String!
+        users(query: String): [User!]!
         me: User! 
-        add(numbers: [Float!]): Float!
+        posts(query: String): [Post!]!
+
     }
     
 
@@ -20,6 +45,14 @@ const typeDefs = `
         age:Int
     }
 
+    
+    type Post {
+        id: ID!
+        title: String!
+        body: String!
+        published:Boolean!
+    }
+
 `
 
 
@@ -27,12 +60,6 @@ const typeDefs = `
 
 const resolvers = {
     Query:{
-        hello(){
-            return 'This is my first query!'
-        },
-        name(){
-            return 'Ram Prasad'
-        },
         me(){
             return {
                 id: '123343',
@@ -41,28 +68,29 @@ const resolvers = {
                 age:24 
             }
         },
-        greeting(parent, args, ctx, info){
-            if(args.name && args.position){
-                return `Hello, ${args.name}! you are my favorite ${args.position}`
+        posts(parent,args,ctx,info){
+            if(!args.query){
+                return posts
             }else{
-                return 'Hello!'
-            }
-         
-        },
-        grades(parent, args, ctx, info){
-            return [99,89,93]
-        },
-        add(parent,args, ctx, info){
-            if(args.numbers.length == 0){
-               return 0 
-            }
+                return posts.filter((post) =>{
+                    const isTitleMatch = post.title.toLowerCase().includes(args.query.toLowerCase())
+                    const isBodyMatch = post.body.toLowerCase().includes(args.query.toLowerCase())
 
-            // [1, 5, 2]
-            return args.numbers.reduce((accumulator,currentValue)=> accumulator + currentValue)
+                    return isTitleMatch || isBodyMatch 
+                })
+            }
+        },
+        users(parent,args,ctx,info){
+            if(!args.query){
+                return users
+            }else{
+                return users.filter((user) =>{
+                    return user.name.toLowerCase().includes(args.query.toLowerCase())
+                })
+            }
+            
         }
-    }
-
-    
+    }    
 }
 
 
