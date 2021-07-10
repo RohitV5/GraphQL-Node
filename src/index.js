@@ -1,10 +1,20 @@
 import {GraphQLServer} from 'graphql-yoga';
 
 // Type definitions a.k.a Application Schema.
+// you cant add comments in there
 const typeDefs = `
     type Query {
         hello: String!
         name: String!
+        me: User!
+    }
+    
+
+    type User {
+        id: ID!
+        name: String!
+        email: String!
+        age:Int
     }
 `
 
@@ -18,8 +28,18 @@ const resolvers = {
         },
         name(){
             return 'Andrew Mead'
+        },
+        me(){
+            return {
+                id: '123343',
+                name: 'Rohit',
+                email: 'verma.rohit.in@gmail.com',
+                age:24 
+            }
         }
     }
+
+    
 }
 
 

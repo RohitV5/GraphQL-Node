@@ -16,4 +16,9 @@ const location = "Baroda";
 
 export {message, location as default};
 
-GraphQl 
+GraphQL Scalar Types
+// String , Boolean (False), Int (4),  Float (4.7) Int value is valid float, ID (Similar to string) 
+
+
+GraphQL Non Scalar Type
+Object {}
