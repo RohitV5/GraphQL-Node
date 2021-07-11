@@ -32,4 +32,64 @@ ctx - context like token, authorization detail, ID.
 info - info about actual operation sent along to the server.
 
 
-Next up: 15. Relational Data Arrays.mp4
+Sample queries to run and test
+
+1.To get all post and their comments with user
+
+query {
+  posts(query:"Vol")
+  {
+    title,
+    body,
+    published,
+    author
+    {name}
+    comments
+    {
+      text
+      author{
+        name
+      }
+    }
+  }
+
+}
+
+
+2.To get all users and their posts and comments
+query {
+  users{
+    id
+    name
+    email
+    age
+    posts{
+      id
+      title
+      author{
+        id
+        name
+      }
+    }
+    comments{
+      id
+      text
+    }
+  }
+
+}
+
+
+3.To Get all comments and  its user and post
+query{
+  comments{
+    id
+    text
+    author{
+      name
+    }
+    post{
+      title
+    }
+  }
+}

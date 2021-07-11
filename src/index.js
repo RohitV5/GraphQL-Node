@@ -20,13 +20,13 @@ const users = [{
 
 
 const posts = [{
-    id:'092',
+    id:'001',
     title:'My Biography',
     body:'Type Dolor Emet',
     published:true,
     author:'2'
 },{
-    id:'092',
+    id:'002',
     title:'My Biography Vol 2',
     body:'Type Dolor Emet Wonka',
     published:false,
@@ -37,20 +37,24 @@ const posts = [{
 const comments = [{
     id: '102', 
     text:'This worked well for me. Thanks',
-    author:'1'
+    author:'1',
+    post:'001'
 },{
     id: '103', 
     text:'Glad you enjoyed it',
-    author:'2'
+    author:'2',
+    post:'001'
 },
 {
     id: '104', 
     text:'This did not work',
-    author:'3'
+    author:'3',
+    post:'002'
 },{
     id: '105', 
     text:'What issue are you facing',
-    author:'2'
+    author:'2',
+    post:'002'
 }]
 
 
@@ -84,6 +88,7 @@ const typeDefs = `
         body: String!
         published:Boolean!
         author:User!
+        comments:[Comment!]!
     }
 
     type Comment {
@@ -144,6 +149,12 @@ const resolvers = {
             return users.find((user)=>{
                 return user.id == parent.author
             }) 
+        },
+        comments(parent,args, ctx, info){
+            // parent has all the info to find relationship
+            return comments.filter((comment)=>{
+                return comment.post == parent.id
+            }) 
         }
     },
     User:{
@@ -166,7 +177,13 @@ const resolvers = {
             return users.find((user)=>{
                 return user.id == parent.author
             }) 
-        }
+        },
+        post(parent,args, ctx, info){
+            // parent has all the info to find relationship
+            return posts.find((post)=>{
+                return post.id == parent.post
+            }) 
+        },
     }
 
 }
