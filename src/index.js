@@ -46,6 +46,7 @@ const typeDefs = `
         name: String!
         email: String!
         age:Int
+        posts: [Post!]!
     }
 
     
@@ -100,6 +101,14 @@ const resolvers = {
             // parent has all the info to find relationship
             return users.find((user)=>{
                 return user.id == parent.author
+            }) 
+        }
+    },
+    User:{
+        posts(parent,args, ctx, info){
+            // parent has all the info to find relationship
+            return posts.filter((post)=>{
+                return post.author == parent.id
             }) 
         }
     }    
