@@ -11,6 +11,11 @@ const users = [{
     name: 'Rohit',
     email: 'rohit@example.com',
 
+},{
+    id: '3',
+    name: 'Gajodhar',
+    email: 'gujju@example.com',
+
 }]
 
 
@@ -29,6 +34,27 @@ const posts = [{
 
 }]
 
+const comments = [{
+    id: '102', 
+    text:'This worked well for me. Thanks',
+    author:'1'
+},{
+    id: '103', 
+    text:'Glad you enjoyed it',
+    author:'2'
+},
+{
+    id: '104', 
+    text:'This did not work',
+    author:'3'
+},{
+    id: '105', 
+    text:'What issue are you facing',
+    author:'2'
+}]
+
+
+
 // Type definitions a.k.a Application Schema.
 // you cant add comments in there
 const typeDefs = `
@@ -37,6 +63,7 @@ const typeDefs = `
         me: User! 
         posts(query: String): [Post!]!
         post:Post!
+        comments: [Comment!]!
 
     }
     
@@ -47,6 +74,7 @@ const typeDefs = `
         email: String!
         age:Int
         posts: [Post!]!
+        comments:[Comment!]!
     }
 
     
@@ -58,7 +86,17 @@ const typeDefs = `
         author:User!
     }
 
+    type Comment {
+        id: ID!
+        text: String!
+        author:User!
+        post:Post!
+    }
+
 `
+
+
+
 
 
 //Resolvers
@@ -94,7 +132,11 @@ const resolvers = {
                 })
             }
             
-        }
+        },
+        comments(parent,args,ctx,info){
+            return comments
+        }   
+
     },
     Post:{
         author(parent, args, ctx, info){
@@ -110,8 +152,23 @@ const resolvers = {
             return posts.filter((post)=>{
                 return post.author == parent.id
             }) 
+        },
+        comments(parent,args, ctx, info){
+            // parent has all the info to find relationship
+            return comments.filter((comment)=>{
+                return comment.author == parent.id
+            }) 
         }
-    }    
+    } ,
+    Comment:{
+        author(parent, args, ctx, info){ 
+            // parent has all the info to find relationship
+            return users.find((user)=>{
+                return user.id == parent.author
+            }) 
+        }
+    }
+
 }
 
 
