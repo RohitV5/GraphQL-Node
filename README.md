@@ -94,5 +94,19 @@ query{
   }
 }
 
+We breaked typedef and schema and loaded them from different files.
+We learned how to use context by setting us db context which is  shared across app and pass that context to graphql server..
 
-.
+<!-- database context ctx -->
+users(parent,args,ctx,info){
+      if(!args.query){
+          return ctx.db.users
+      }else{
+          return users.filter((user) =>{
+              return user.name.toLowerCase().includes(args.query.toLowerCase())
+          })
+      }
+      
+  },
+
+
