@@ -110,3 +110,20 @@ users(parent,args,ctx,info){
   },
 
 
+
+  Enums in GraphQL
+  1. A special type that defines  a set of constants.
+  2.This type can then be used as a type for the field (similar to scalar and custom object types)
+  3.Values for the field must be one of the constants for the type
+
+  ed. UserRole: standard, editor, admin
+
+  Mutation: Created, Updated, Deleted
+
+This is used to enforce when data is cominf g=from front end.
+
+
+
+
+
+
